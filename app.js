@@ -18,13 +18,21 @@ const db   = firebase.firestore();
 
 /* ========== ESTADO GLOBAL ========== */
 const state = {
-  user: null,
-  pin: "0000",                  // PIN inicial
-  configDocId: "config-app",
-  ivuRate: 0.115,               // 11.5% por defecto
-  config: {},                   // datos del taller (nombre, tel, etc.)
-  preciosCache: []              // lista de precios en memoria
+user: null,
+pin: "0000", // PIN inicial
+configDocId: "config-app",
+config: {
+tallerNombre: "",
+tallerTelefono: "",
+tallerEmail: "",
+tallerDireccion: "",
+logoUrl: "",
+driveUrl: "",
+tarifaHora: 65, // tarifa por hora por defecto
+ivaPorciento: 11.5 // IVU por defecto (11.5%)
+}
 };
+
 
 /* ========== HELPERS DOM ========== */
 const qs  = (sel, p = document) => p.querySelector(sel);
