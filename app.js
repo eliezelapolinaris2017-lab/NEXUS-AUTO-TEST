@@ -197,86 +197,53 @@ auth.onAuthStateChanged(async (user) => {
 /* ========== CONFIGURACIÓN ========== */
 
 async function cargarConfiguracion() {
-  try {
-    const docRef = db.collection("ajustes").doc(state.configDocId);
-    const snap   = await docRef.get();
-    if (!snap.exists) return;
+try {
+const docRef = db.collection("ajustes").doc(state.configDocId);
+const snap = await docRef.get();
+if (!snap.exists) return;
 
-    const data = snap.data();
-    state.config = data || {};
+const data = snap.data() || {};
 
-    if (data.pin) state.pin = String(data.pin);
+// merge con defaults
+state.config = {
+...state.config,
+...data
+};
 
-    // IVU configurado (ej. 11.5 => 0.115)
-    if (typeof data.ivuRate === "number") {
-      state.ivuRate = data.ivuRate / 100;
-    }
+// actualizar PIN si existe en la config
+if (data.pin) state.pin = String(data.pin);
 
-    const form = qs("#configForm");
-    if (form) {
-      form.tallerNombre.value    = data.tallerNombre    || "";
-      form.tallerTelefono.value  = data.tallerTelefono  || "";
-      form.tallerEmail.value     = data.tallerEmail     || "";
-      form.tallerDireccion.value = data.tallerDireccion || "";
-      form.logoUrl.value         = data.logoUrl         || "";
-      form.driveUrl.value        = data.driveUrl        || "";
-      if (form.ivuRate && data.ivuRate != null) {
-        form.ivuRate.value = data.ivuRate;
-      }
-    }
+const form = qs("#configForm");
+if (form) {
+form.tallerNombre.value = data.tallerNombre || "";
+form.tallerTelefono.value = data.tallerTelefono || "";
+form.tallerEmail.value = data.tallerEmail || "";
+form.tallerDireccion.value = data.tallerDireccion || "";
+form.logoUrl.value = data.logoUrl || "";
+form.driveUrl.value = data.driveUrl || "";
 
-    if (data.logoUrl) {
-      qsa(".logo-auto, .hero-logo").forEach(img => (img.src = data.logoUrl));
-    }
-  } catch (err) {
-    console.error("Error cargar config:", err);
-  }
+// NUEVOS CAMPOS (si ya los tienes en el HTML)
+if (form.tarifaHora) {
+form.tarifaHora.value = (data.tarifaHora != null)
+? data.tarifaHora
+: state.config.tarifaHora;
+}
+if (form.ivaPorciento) {
+form.ivaPorciento.value = (data.ivaPorciento != null)
+? data.ivaPorciento
+: state.config.ivaPorciento;
+}
 }
 
-async function guardarConfiguracion(e) {
-  e.preventDefault();
-  const form     = e.target;
-  const nuevoPin = (form.pinNuevo.value || "").trim();
-
-  let ivuNumber = 11.5;
-  if (form.ivuRate) {
-    const parsed = parseFloat(form.ivuRate.value || "11.5");
-    ivuNumber = isNaN(parsed) ? 11.5 : parsed;
-  }
-
-  const payload = {
-    tallerNombre:    form.tallerNombre.value    || "",
-    tallerTelefono:  form.tallerTelefono.value  || "",
-    tallerEmail:     form.tallerEmail.value     || "",
-    tallerDireccion: form.tallerDireccion.value || "",
-    logoUrl:         form.logoUrl.value         || "",
-    driveUrl:        form.driveUrl.value        || "",
-    ivuRate:         ivuNumber,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-  };
-  if (nuevoPin) payload.pin = nuevoPin;
-
-  try {
-    await db.collection("ajustes").doc(state.configDocId).set(payload, { merge: true });
-    if (nuevoPin) state.pin = nuevoPin;
-    state.ivuRate = ivuNumber / 100;
-    state.config  = { ...state.config, ...payload };
-
-    const statusEl = qs("#configStatus");
-    if (statusEl) {
-      statusEl.textContent = "Configuración guardada.";
-      setTimeout(() => (statusEl.textContent = ""), 2000);
-    }
-
-    if (payload.logoUrl) {
-      qsa(".logo-auto, .hero-logo").forEach(img => (img.src = payload.logoUrl));
-    }
-  } catch (err) {
-    console.error("Error guardar config:", err);
-    const statusEl = qs("#configStatus");
-    if (statusEl) statusEl.textContent = "Error guardando configuración.";
-  }
+// actualizar logo en la app si hay URL
+if (state.config.logoUrl) {
+qsa(".logo-auto, .hero-logo").forEach(img => (img.src = state.config.logoUrl));
 }
+} catch (err) {
+console.error("Error cargar config:", err);
+}
+}
+
 
 /* ========== INGRESOS (ENTRADA VEHÍCULOS) ========== */
 
