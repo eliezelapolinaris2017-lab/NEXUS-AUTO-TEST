@@ -5,7 +5,7 @@
 /* ========== CONFIG FIREBASE ========== */
 const firebaseConfig = {
   apiKey:
-  authDomain: 
+  authDomain: "nexus-auto-pro-2026.firebaseapp.com", 
   projectId:
   storageBucket: 
   messagingSenderId:
