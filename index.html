@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nexus Auto Pro 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Suite corporativa para gestión de talleres automotrices en Puerto Rico." />
+
+  <!-- Favicon / logo (ajusta la ruta) -->
+  <link rel="icon" type="image/png" href="assets/logo-auto.png" />
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+
+  <!-- ========== VISTA LOGIN ========== -->
+  <div id="loginView" class="view visible">
+    <div class="login-shell">
+
+      <!-- LOGO + TITULO -->
+      <header class="login-hero">
+        <img src="assets/logo-auto.png" alt="Nexus Auto Pro 2026" class="hero-logo" />
+        <div class="hero-text">
+          <h1 class="hero-title">Nexus Auto Pro 2026</h1>
+          <p class="hero-subtitle">
+            Suite corporativa para gestión de talleres automotrices en Puerto Rico.
+          </p>
+        </div>
+      </header>
+
+      <!-- TARJETA PRINCIPAL DE ACCESO -->
+      <section class="login-card-pro">
+        <div class="login-card-header">
+          <p class="login-tag">Panel del taller</p>
+          <h2>Selecciona la forma de acceso</h2>
+        </div>
+
+        <div class="login-grid">
+
+          <!-- COLUMNA PIN -->
+          <form id="pinForm" class="login-block">
+            <h3>Acceso con PIN</h3>
+            <p class="login-block-sub">
+              Acceso rápido para personal interno del taller.
+            </p>
+
+            <label for="pinInput" class="login-label">PIN de acceso</label>
+            <input
+              id="pinInput"
+              type="password"
+              maxlength="6"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              class="login-input"
+              placeholder="••••"
+              required
+            />
+
+            <button type="submit" class="btn primary btn-full">
+              Entrar
+            </button>
+
+            <p class="login-footnote">
+              <strong></strong>
+              <span class="link-inline"></span>
+            </p>
+          </form>
+
+          <!-- DIVISOR -->
+          <div class="login-divider" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <!-- COLUMNA GOOGLE -->
+          <div class="login-block login-block-secondary">
+            <h3>Acceso con Google</h3>
+            <p class="login-block-sub">
+              Multiusuario · Datos compartidos en la nube.
+            </p>
+
+            <button type="button" id="googleSignInBtn" class="btn ghost btn-full">
+              Entrar con Google (taller)
+            </button>
+
+            <ul class="login-bullets">
+              <li>Sincronizado en todos los dispositivos.</li>
+              <li>Historial de ingresos, cotizaciones y facturas.</li>
+              <li>Un solo panel para todo el equipo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <footer class="login-footer">
+          Nexus Auto Pro 2026 · Desarrollado para talleres que se toman en serio su operación.
+        </footer>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ========== VISTA APP ========== -->
+  <div id="appView" class="view">
+
+    <!-- HEADER SUPERIOR -->
+    <header class="app-header">
+      <div class="app-header-left">
+        <img src="assets/logo-auto.png" alt="Logo taller" class="app-logo logo-auto" />
+        <div>
+          <h1 class="app-title">Nexus Auto Pro 2026</h1>
+          <p class="app-subtitle">Taller automotriz · Puerto Rico</p>
+        </div>
+      </div>
+
+      <!-- MENÚ PRINCIPAL -->
+      <nav class="app-nav">
+        <button class="menu-btn active" data-view="ingresosView">Panel / Ingresos</button>
+        <button class="menu-btn" data-view="entregasView">Entregas</button>
+        <button class="menu-btn" data-view="historialView">Historial</button>
+        <button class="menu-btn" data-view="cotizacionesView">Cotizaciones</button>
+        <button class="menu-btn" data-view="facturasView">Facturas</button>
+        <button class="menu-btn" data-view="clientesView">Clientes</button>
+        <button class="menu-btn" data-view="suplidoresView">Suplidores</button>
+        <button class="menu-btn" data-view="configView">Configuración</button>
+        <button id="logoutBtn" class="menu-btn danger">Salir</button>
+      </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="app-main">
+
+      <!-- ========== SCREEN: PANEL / INGRESOS ========== -->
+      <section id="ingresosView" class="screen visible">
+
+        <div class="grid-2">
+          <!-- KPIs -->
+          <section class="card kpi-card-set">
+            <header class="card-header">
+              <h2>Resumen rápido del taller</h2>
+              <p>Indicadores en tiempo real de los vehículos en proceso.</p>
+            </header>
+
+            <div class="kpi-grid">
+              <article id="kpiIngresos" class="kpi-card">
+                <span class="kpi-label">Ingresos abiertos</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Cantidad de vehículos en el taller.</span>
+              </article>
+
+              <article id="kpiMecanica" class="kpi-card">
+                <span class="kpi-label">Trabajos de mecánica</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Órdenes activas de mecánica general.</span>
+              </article>
+
+              <article id="kpiUltimoIngreso" class="kpi-card">
+                <span class="kpi-label">Fecha del último ingreso</span>
+                <span class="kpi-value">—</span>
+                <span class="kpi-hint">Último registro creado.</span>
+              </article>
+
+              <!-- NUEVOS KPIs PARA HOJALATERÍA Y PINTURA -->
+              <article id="kpiHojalateria" class="kpi-card">
+                <span class="kpi-label">Trabajos de hojalatería</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Órdenes activas de carrocería.</span>
+              </article>
+
+              <article id="kpiPintura" class="kpi-card">
+                <span class="kpi-label">Trabajos de pintura</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Órdenes activas de pintura.</span>
+              </article>
+            </div>
+          </section>
+
+          <!-- NUEVO INGRESO -->
+          <section class="card">
+            <header class="card-header">
+              <h2>Nuevo ingreso de vehículo</h2>
+              <p>Captura todos los datos del cliente y del vehículo en un solo paso.</p>
+            </header>
+
+            <form id="ingresoForm" class="card-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre del cliente</label>
+                  <input type="text" name="clienteNombre" required />
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input type="text" name="clienteTelefono" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <input type="text" name="clienteDireccion" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Tablilla</label>
+                  <input type="text" name="vehiculoTablilla" />
+                </div>
+                <div class="form-group">
+                  <label>Marca</label>
+                  <input type="text" name="vehiculoMarca" />
+                </div>
+                <div class="form-group">
+                  <label>Modelo</label>
+                  <input type="text" name="vehiculoModelo" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Año</label>
+                  <input type="text" name="vehiculoAno" />
+                </div>
+                <div class="form-group">
+                  <label>Color</label>
+                  <input type="text" name="vehiculoColor" />
+                </div>
+                <div class="form-group">
+                  <label>VIN</label>
+                  <input type="text" name="vehiculoVin" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Tipo de trabajo</label>
+                  <select name="tipoTrabajo">
+                    <option value="mecanica">Mecánica</option>
+                    <option value="hojalateria">Hojalatería y carrocería</option>
+                    <option value="pintura">Pintura</option>
+                    <option value="detailing">Detailing</option>
+                    <option value="otros">Otros</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group full">
+                  <label>Descripción del trabajo / diagnóstico</label>
+                  <textarea name="descripcionTrabajo" rows="3"></textarea>
+                </div>
+              </div>
+
+              <footer class="card-footer">
+                <span id="ingresoStatus" class="status-msg"></span>
+                <button type="submit" class="btn primary">Guardar ingreso</button>
+              </footer>
+            </form>
+          </section>
+        </div>
+
+        <!-- LISTADO DE INGRESOS ABIERTOS -->
+        <section class="card">
+          <header class="card-header">
+            <h2>Vehículos en proceso</h2>
+            <p>Listado de ingresos abiertos. Desde aquí puedes pasar a entrega.</p>
+          </header>
+          <div id="ingresosLista" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+        </section>
+
+      </section>
+
+      <!-- ========== SCREEN: ENTREGAS ========== -->
+      <section id="entregasView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <h2>Entregas de vehículos</h2>
+            <p>
+              Las entregas se registran desde el panel de ingresos al marcar un
+              vehículo como entregado. Aquí puedes consultar el historial reciente.
+            </p>
+          </header>
+          <div class="table-wrapper" id="entregasTabla">
+            <p class="placeholder">
+              Las entregas se generan automáticamente cuando cierras un ingreso y creas una factura.
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: HISTORIAL ========== -->
+      <section id="historialView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <h2>Historial por cliente / vehículo</h2>
+            <p>Busca por nombre, tablilla o VIN y revisa ingresos y facturas asociadas.</p>
+          </header>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input
+                type="text"
+                id="historialBuscarInput"
+                class="toolbar-input"
+                placeholder="Ej. Juan Pérez, JDK-123, VIN..."
+              />
+            </div>
+            <div class="toolbar-right">
+              <button id="historialBuscarBtn" class="btn primary">Buscar</button>
+            </div>
+          </div>
+
+          <div id="historialResultados" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: COTIZACIONES ========== -->
+      <section id="cotizacionesView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <div>
+              <h2>Cotizaciones</h2>
+              <p>Cotizaciones para seguros y trabajos generales del taller.</p>
+            </div>
+            <div class="header-actions">
+              <button id="nuevaCotizacionBtn" class="btn primary">Nueva cotización</button>
+              <button id="exportCotizacionesBtn" class="btn ghost">Imprimir listado</button>
+            </div>
+          </header>
+
+          <div id="cotizacionesTabla" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: FACTURAS ========== -->
+      <section id="facturasView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <div>
+              <h2>Facturas</h2>
+              <p>Control de facturación del taller: pagadas y pendientes.</p>
+            </div>
+            <div class="header-actions">
+              <select id="filtroEstadoFactura" class="filter-select">
+                <option value="todas">Todas</option>
+                <option value="pagada">Solo pagadas</option>
+                <option value="pendiente">Solo pendientes</option>
+              </select>
+              <button id="exportFacturasBtn" class="btn ghost">Imprimir listado</button>
+            </div>
+          </header>
+
+          <div id="facturasTabla" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+
+          <footer class="card-footer">
+            <div id="resumenFacturas" class="summary-bar">
+              <!-- Resumen pagos recibidos / pendientes -->
+            </div>
+          </footer>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: CLIENTES ========== -->
+      <section id="clientesView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <div>
+              <h2>Listado de clientes</h2>
+              <p>Base de datos de clientes del taller.</p>
+            </div>
+            <div class="header-actions">
+              <button id="nuevoClienteBtn" class="btn primary">Añadir cliente</button>
+            </div>
+          </header>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input
+                type="text"
+                id="buscarClienteInput"
+                class="toolbar-input"
+                placeholder="Buscar por nombre, teléfono o dirección..."
+              />
+            </div>
+            <div class="toolbar-right">
+              <button id="buscarClienteBtn" class="btn ghost">Buscar</button>
+            </div>
+          </div>
+
+          <div id="clientesTabla" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: SUPLIDORES ========== -->
+      <section id="suplidoresView" class="screen">
+        <section class="card">
+          <header class="card-header">
+            <div>
+              <h2>Suplidores</h2>
+              <p>Proveedores de piezas, pintura, insumos y servicios externos.</p>
+            </div>
+            <div class="header-actions">
+              <button id="nuevoSuplidorBtn" class="btn primary">Añadir suplidor</button>
+            </div>
+          </header>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input
+                type="text"
+                id="buscarSuplidorInput"
+                class="toolbar-input"
+                placeholder="Buscar por nombre, tipo o teléfono..."
+              />
+            </div>
+            <div class="toolbar-right">
+              <button id="buscarSuplidorBtn" class="btn ghost">Buscar</button>
+            </div>
+          </div>
+
+          <div id="suplidoresTabla" class="table-wrapper">
+            <!-- Se llena desde app.js -->
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== SCREEN: CONFIGURACIÓN ========== -->
+      <section id="configView" class="screen">
+
+        <div class="grid-2">
+          <!-- AJUSTES DEL TALLER -->
+          <section class="card">
+            <header class="card-header">
+              <h2>Configuración del taller</h2>
+              <p>Datos que aparecerán en cotizaciones y facturas.</p>
+            </header>
+
+            <form id="configForm" class="card-form">
+              <div class="form-row">
+                <div class="form-group full">
+                  <label>Nombre del taller</label>
+                  <input type="text" name="tallerNombre" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Teléfono principal</label>
+                  <input type="text" name="tallerTelefono" />
+                </div>
+                <div class="form-group">
+                  <label>Correo electrónico</label>
+                  <input type="email" name="tallerEmail" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group full">
+                  <label>Dirección</label>
+                  <input type="text" name="tallerDireccion" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>URL del logo</label>
+                  <input type="text" name="logoUrl" />
+                </div>
+                <div class="form-group">
+                  <label>Carpeta de fotos (Google Drive)</label>
+                  <input type="text" name="driveUrl" />
+                </div>
+              </div>
+
+              <!-- NUEVO: IVU CONFIGURABLE -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label>IVU (%)</label>
+                  <input type="number" step="0.01" name="ivuRate" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nuevo PIN de acceso</label>
+                  <input type="password" name="pinNuevo" />
+                </div>
+              </div>
+
+              <footer class="card-footer">
+                <span id="configStatus" class="status-msg"></span>
+                <button type="submit" class="btn primary">Guardar configuración</button>
+              </footer>
+            </form>
+          </section>
+
+          <!-- LISTA DE PRECIOS -->
+          <section class="card">
+            <header class="card-header">
+              <div>
+                <h2>Listas de precios</h2>
+                <p>Plantilla de servicios para mecánica, hojalatería, pintura y detailing.</p>
+              </div>
+              <div class="header-actions">
+                <button id="nuevoPrecioBtn" class="btn primary">Añadir servicio</button>
+              </div>
+            </header>
+
+            <div id="preciosTabla" class="table-wrapper">
+              <!-- Se llena desde app.js -->
+            </div>
+
+            <footer class="card-footer">
+              <p class="footnote">
+                Estos precios pueden utilizarse como referencia al crear cotizaciones y facturas.
+              </p>
+            </footer>
+          </section>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========== MODAL GLOBAL PARA FORMULARIOS ========== -->
+  <div id="dialogBackdrop" class="dialog-backdrop hidden">
+    <div class="dialog-card">
+      <h3 id="dialogTitle">TÍTULO</h3>
+
+      <form id="dialogForm">
+        <div id="dialogFields"></div>
+
+        <div class="dialog-actions">
+          <button type="button" id="dialogCancelBtn" class="btn ghost">
+            Cancelar
+          </button>
+          <button type="submit" id="dialogSubmitBtn" class="btn primary">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== LIBRERÍAS JS (Firebase + jsPDF + App) ========== -->
+  <!-- Firebase v8 (auth + firestore) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- jsPDF (sin atributo integrity para evitar el error de digest) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+          referrerpolicy="no-referrer"></script>
+
+  <!-- Lógica de la app -->
+  <script src="app.js?v=2"></script>
+</body>
+</html>
