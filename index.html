@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nexus Auto Pro 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+
+  <!-- ========== VISTA LOGIN ========== -->
+  <div id="loginView" class="view visible">
+    <div class="login-shell">
+      <div class="login-hero">
+        <img src="assets/logo-auto.png" alt="Nexus Auto Pro 2026" class="hero-logo logo-auto" />
+        <h1 class="hero-title">Nexus Auto Pro 2026</h1>
+        <p class="hero-subtitle">Panel profesional para talleres automotrices en Puerto Rico</p>
+      </div>
+
+      <div class="login-card-pro">
+        <div class="login-card-header">
+          <div class="login-tag">ACCESO RÁPIDO</div>
+          <h2>Entrar con PIN o Google</h2>
+        </div>
+
+        <div class="login-grid">
+          <!-- Bloque PIN -->
+          <div class="login-block">
+            <h3>PIN local</h3>
+            <p class="login-block-sub">Ideal para uso interno en el taller sin cuentas de Google.</p>
+            <form id="pinForm">
+              <label for="pinInput" class="login-label">PIN de acceso</label>
+              <input id="pinInput" type="password" class="login-input" placeholder="0000" required />
+              <button type="submit" class="btn primary btn-full">Entrar con PIN</button>
+              <p class="login-footnote">
+                El PIN se configura en <span class="link-inline">Ajustes del taller</span>.
+              </p>
+            </form>
+          </div>
+
+          <!-- Divisor -->
+          <div class="login-divider">
+            <span></span>
+          </div>
+
+          <!-- Bloque Google -->
+          <div class="login-block login-block-secondary">
+            <h3>Google</h3>
+            <p class="login-block-sub">Sincroniza todos los datos del taller en la nube con Firebase.</p>
+            <button type="button" id="googleSignInBtn" class="btn ghost btn-full">
+              Ingresar con Google
+            </button>
+            <ul class="login-bullets">
+              <li>Acceso desde varias computadoras o laptops</li>
+              <li>Respaldos automáticos en Firestore</li>
+              <li>Ideal para varios usuarios y sucursales</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="login-footer">
+          Nexus Auto Pro 2026 · by Nexus Tools PR
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== VISTA APP PRINCIPAL ========== -->
+  <div id="appView" class="view" aria-hidden="true">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="app-header-left">
+        <img src="assets/logo-auto.png" alt="Logo Nexus Auto Pro 2026" class="app-logo logo-auto" />
+        <div>
+          <h1 class="app-title">Nexus Auto Pro 2026</h1>
+          <p class="app-subtitle">Control de ingresos, facturas, mano de obra y clientes</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="logoutBtn" class="btn ghost small">Cerrar sesión</button>
+      </div>
+
+      <!-- Menú principal -->
+      <nav class="app-nav">
+        <button class="menu-btn active" data-view="ingresosView">Ingresos</button>
+        <button class="menu-btn" data-view="entregasView">Entregas</button>
+        <button class="menu-btn" data-view="facturasView">Facturas</button>
+        <button class="menu-btn" data-view="cotizacionesView">Cotizaciones</button>
+        <button class="menu-btn" data-view="historialView">Historial</button>
+        <button class="menu-btn" data-view="clientesView">Clientes</button>
+        <button class="menu-btn" data-view="suplidoresView">Suplidores</button>
+        <button class="menu-btn" data-view="configView">Ajustes & Lista de precios</button>
+      </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="app-main">
+
+      <!-- ========== SCREEN: INGRESOS ========== -->
+      <section id="ingresosView" class="screen visible">
+        <div class="grid-2">
+          <!-- Formulario ingreso vehículo -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2>Nuevo ingreso de vehículo</h2>
+                <p>Registra la entrada del vehículo al taller con datos básicos.</p>
+              </div>
+            </div>
+            <form id="ingresoForm" class="card-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre del cliente</label>
+                  <input name="clienteNombre" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input name="clienteTelefono" type="text" />
+                </div>
+              </div>
+
+              <div class="form-group full">
+                <label>Dirección</label>
+                <input name="clienteDireccion" type="text" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Tablilla</label>
+                  <input name="vehiculoTablilla" type="text" />
+                </div>
+                <div class="form-group">
+                  <label>Marca</label>
+                  <input name="vehiculoMarca" type="text" />
+                </div>
+                <div class="form-group">
+                  <label>Modelo</label>
+                  <input name="vehiculoModelo" type="text" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Año</label>
+                  <input name="vehiculoAno" type="text" />
+                </div>
+                <div class="form-group">
+                  <label>Color</label>
+                  <input name="vehiculoColor" type="text" />
+                </div>
+                <div class="form-group">
+                  <label>VIN</label>
+                  <input name="vehiculoVin" type="text" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Tipo de trabajo</label>
+                  <select name="tipoTrabajo">
+                    <option value="mecanica">Mecánica</option>
+                    <option value="hojalateria">Hojalatería</option>
+                    <option value="pintura">Pintura</option>
+                    <option value="detailing">Detailing</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group full">
+                <label>Descripción del trabajo</label>
+                <textarea name="descripcionTrabajo" rows="3" placeholder="Quejas del cliente, diagnóstico inicial, etc."></textarea>
+              </div>
+
+              <div class="card-footer">
+                <div id="ingresoStatus" class="status-msg"></div>
+                <button type="submit" class="btn primary">Guardar ingreso</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- KPIs + lista -->
+          <div class="card kpi-card-set">
+            <div class="card-header">
+              <div>
+                <h2>Resumen rápido del taller</h2>
+                <p>Ingresos abiertos y distribución por tipo de trabajo.</p>
+              </div>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-card" id="kpiIngresos">
+                <span class="kpi-label">Ingresos abiertos</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Vehículos en el taller</span>
+              </div>
+              <div class="kpi-card" id="kpiMecanica">
+                <span class="kpi-label">Trabajos mecánica</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Motores, frenos, suspensión</span>
+              </div>
+              <div class="kpi-card" id="kpiHojalateria">
+                <span class="kpi-label">Hojalatería</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Golpes, enderezado</span>
+              </div>
+              <div class="kpi-card" id="kpiPintura">
+                <span class="kpi-label">Pintura</span>
+                <span class="kpi-value">0</span>
+                <span class="kpi-hint">Reparación y retoques</span>
+              </div>
+              <div class="kpi-card" id="kpiUltimoIngreso">
+                <span class="kpi-label">Último ingreso</span>
+                <span class="kpi-value">—</span>
+                <span class="kpi-hint">Fecha más reciente</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span class="status-msg">Abajo verás la lista de ingresos abiertos. Desde ahí puedes registrar mano de obra y la entrega.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <div class="card-header">
+            <div>
+              <h2>Ingresos abiertos</h2>
+              <p>Desde aquí puedes registrar <strong>Mano de obra</strong> y luego la <strong>entrega</strong> para facturar.</p>
+            </div>
+          </div>
+          <div class="table-wrapper" id="ingresosLista">
+            <p class="placeholder">No hay ingresos cargados.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: ENTREGAS ========== -->
+      <section id="entregasView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Entregas registradas</h2>
+              <p>Historial de vehículos entregados al cliente.</p>
+            </div>
+          </div>
+          <div class="table-wrapper" id="entregasTabla">
+            <p class="placeholder">No hay entregas registradas aún.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: FACTURAS ========== -->
+      <section id="facturasView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Facturas</h2>
+              <p>Imprime facturas y marca pagos recibidos.</p>
+            </div>
+            <div class="header-actions">
+              <select id="filtroEstadoFactura" class="filter-select">
+                <option value="todas">Todas</option>
+                <option value="pagada">Solo pagadas</option>
+                <option value="pendiente">Solo pendientes</option>
+              </select>
+              <button id="exportFacturasBtn" class="btn small primary">Exportar listado PDF</button>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div id="resumenFacturas" class="summary-bar">
+              <span class="status-msg">Sin datos aún.</span>
+            </div>
+          </div>
+          <div class="table-wrapper" id="facturasTabla">
+            <p class="placeholder">No hay facturas registradas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: COTIZACIONES ========== -->
+      <section id="cotizacionesView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Cotizaciones</h2>
+              <p>Cotizaciones rápidas para seguros y clientes.</p>
+            </div>
+            <div class="header-actions">
+              <button id="nuevaCotizacionBtn" class="btn small primary">Nueva cotización</button>
+              <button id="exportCotizacionesBtn" class="btn small ghost">Exportar listado PDF</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="cotizacionesTabla">
+            <p class="placeholder">No hay cotizaciones registradas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: HISTORIAL ========== -->
+      <section id="historialView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Historial por cliente / vehículo</h2>
+              <p>Busca por nombre, tablilla o VIN en ingresos y facturas.</p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input id="historialBuscarInput" type="text" class="toolbar-input" placeholder="Ej. Juan, JDK-123, VIN..." />
+              <button id="historialBuscarBtn" class="btn small primary">Buscar</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="historialResultados">
+            <p class="placeholder">Escribe un nombre, tablilla o VIN y presiona Buscar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: CLIENTES ========== -->
+      <section id="clientesView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Clientes</h2>
+              <p>Directorio de clientes del taller.</p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input id="buscarClienteInput" type="text" class="toolbar-input" placeholder="Buscar cliente..." />
+              <button id="buscarClienteBtn" class="btn small ghost">Buscar</button>
+            </div>
+            <div class="toolbar-right">
+              <button id="nuevoClienteBtn" class="btn small primary">Nuevo cliente</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="clientesTabla">
+            <p class="placeholder">No hay clientes registrados.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: SUPLIDORES ========== -->
+      <section id="suplidoresView" class="screen">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Suplidores</h2>
+              <p>Piezas, pintura, accesorios y más.</p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input id="buscarSuplidorInput" type="text" class="toolbar-input" placeholder="Buscar suplidor..." />
+              <button id="buscarSuplidorBtn" class="btn small ghost">Buscar</button>
+            </div>
+            <div class="toolbar-right">
+              <button id="nuevoSuplidorBtn" class="btn small primary">Nuevo suplidor</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="suplidoresTabla">
+            <p class="placeholder">No hay suplidores registrados.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SCREEN: CONFIG & LISTA DE PRECIOS ========== -->
+      <section id="configView" class="screen">
+        <div class="grid-2">
+          <!-- Ajustes del taller -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2>Ajustes del taller</h2>
+                <p>Nombre, contacto, logo, IVU y PIN.</p>
+              </div>
+            </div>
+            <form id="configForm" class="card-form">
+              <div class="form-group">
+                <label>Nombre del taller</label>
+                <input name="tallerNombre" type="text" placeholder="Ej. Taller Nexus Auto PR" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input name="tallerTelefono" type="text" />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input name="tallerEmail" type="email" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Dirección</label>
+                <input name="tallerDireccion" type="text" />
+              </div>
+              <div class="form-group">
+                <label>URL del logo (PNG)</label>
+                <input name="logoUrl" type="text" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label>Enlace a carpeta Drive (opcional)</label>
+                <input name="driveUrl" type="text" placeholder="https://drive.google.com/..." />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>IVU (%)</label>
+                  <input name="ivuRate" type="number" step="0.01" placeholder="11.5" />
+                </div>
+                <div class="form-group">
+                  <label>Nuevo PIN</label>
+                  <input name="pinNuevo" type="password" placeholder="0000" />
+                </div>
+              </div>
+              <div class="card-footer">
+                <div id="configStatus" class="status-msg"></div>
+                <button type="submit" class="btn primary">Guardar ajustes</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Lista de precios -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2>Lista de precios</h2>
+                <p>Servicios por producto o por hora. Se usan en cotizaciones.</p>
+              </div>
+              <div class="header-actions">
+                <button id="nuevoPrecioBtn" class="btn small primary">Nuevo servicio</button>
+              </div>
+            </div>
+            <div class="table-wrapper" id="preciosTabla">
+              <p class="placeholder">No hay servicios en la lista de precios.</p>
+            </div>
+            <div class="card-footer">
+              <p class="footnote">
+                Los servicios pueden ser de tipo <strong>Servicio (precio fijo)</strong> o <strong>Por hora</strong>.
+                En la cotización se puede seleccionar desde la lista y añadir horas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========== MODAL GLOBAL (DIALOG TARJETA PRO) ========== -->
+  <div id="dialogBackdrop" class="dialog-backdrop hidden">
+    <div class="dialog-card">
+      <h3 id="dialogTitle">Título</h3>
+      <form id="dialogForm">
+        <div id="dialogFields"></div>
+        <div class="dialog-actions">
+          <button type="button" id="dialogCancelBtn" class="btn ghost small">Cancelar</button>
+          <button type="submit" id="dialogSubmitBtn" class="btn primary small">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+          integrity="sha512-/XH8N8nHCqB6f+GO6zkRgZNpmjDoE7YQDdyCjTiMQuuLHfoalvVYLRNvKcJsteVEh9UpAJZxkd06Pq4jG3C1pQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Lógica de la app -->
+  <script src="app.js?v=3"></script>
+</body>
+</html>
