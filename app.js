@@ -4,7 +4,7 @@
 
 /* ========== CONFIG FIREBASE ========== */
 const firebaseConfig = {
-  apiKey: 
+  apiKey: "AIzaSyAouzcePuYPfGBajbqFFotTNNr_gx_XCYQ",
   authDomain: "nexus-auto-pro-2026.firebaseapp.com",
   projectId: "nexus-auto-pro-2026",
   storageBucket: "nexus-auto-pro-2026.firebasestorage.app",
