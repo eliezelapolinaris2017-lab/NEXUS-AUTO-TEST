@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: "nexus-auto-pro-2026",
   storageBucket: "nexus-auto-pro-2026.firebasestorage.app",
   messagingSenderId: "308014641424",
-  appId: 
+  appId: "1:308014641424:web:5157d1267e280c48eeb595"
 };
 
 firebase.initializeApp(firebaseConfig);
